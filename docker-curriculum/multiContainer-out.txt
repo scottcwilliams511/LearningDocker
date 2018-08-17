@@ -1,0 +1,351 @@
+$ sh multiContainer.sh
+We will clone git repo 'FoodTrucks' into the new folder 'temp_2'
+
+Press any key...
+Cloning into 'temp_2'...
+remote: Counting objects: 382, done.
+remote: Compressing objects: 100% (20/20), done.
+remote: Total 382 (delta 14), reused 18 (delta 7), pack-reused 355
+Receiving objects: 100% (382/382), 3.33 MiB | 2.65 MiB/s, done.
+Resolving deltas: 100% (148/148), done.
+
+Pulling Elasticsearch image...
+
+6.3.2: Pulling from elasticsearch/elasticsearch
+7dc0dca2b151: Pull complete
+72d60ff53590: Pull complete
+ca55c9f7cc1f: Pull complete
+822d6592a660: Pull complete
+22eceb1ece84: Pull complete
+30e73cf19e42: Pull complete
+f05e800ca884: Pull complete
+3e6ee2f75301: Pull complete
+Digest: sha256:8f06aecf7227dbc67ee62d8d05db680f8a29d0296ecd74c60d21f1fe665e04b0
+Status: Downloaded newer image for docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+
+Running Elasticsearch image...
+
+79902ed645cc173dc5c0a42a52b297a75b777af12fc7a6af88d3550571b27701
+
+Waiting... 1
+
+Waiting... 2
+
+Waiting... 3
+
+Waiting... 4
+
+Waiting... 5
+
+Waiting... 6
+
+Waiting... 7
+
+Waiting... 8
+
+Waiting... 9
+
+----- Startup logs -----
+
+OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+[2018-08-17T21:44:27,063][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-08-17T21:44:27,206][INFO ][o.e.e.NodeEnvironment    ] [QlkqhL2] using [1] data paths, mounts [[/ (overlay)]], net usable_space [53.2gb], net total_space [58.4gb], types [overlay]
+[2018-08-17T21:44:27,206][INFO ][o.e.e.NodeEnvironment    ] [QlkqhL2] heap size [990.7mb], compressed ordinary object pointers [true]
+[2018-08-17T21:44:27,208][INFO ][o.e.n.Node               ] [QlkqhL2] node name derived from node ID [QlkqhL2LRWyhvyfjhVZW7Q]; set [node.name] to override
+[2018-08-17T21:44:27,208][INFO ][o.e.n.Node               ] [QlkqhL2] version[6.3.2], pid[1], build[default/tar/053779d/2018-07-20T05:20:23.451332Z], OS[Linux/4.9.93-linuxkit-aufs/amd64], JVM["Oracle Corporation"/OpenJDK 64-Bit Server VM/10.0.2/10.0.2+13]
+[2018-08-17T21:44:27,208][INFO ][o.e.n.Node               ] [QlkqhL2] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Djava.io.tmpdir=/tmp/elasticsearch.Brlzztxy, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m, -Djava.locale.providers=COMPAT, -XX:UseAVX=2, -Des.cgroups.hierarchy.override=/, -Des.path.home=/usr/share/elasticsearch, -Des.path.conf=/usr/share/elasticsearch/config, -Des.distribution.flavor=default, -Des.distribution.type=tar]
+[2018-08-17T21:44:29,119][INFO ][o.e.p.PluginsService     ] [QlkqhL2] loaded module [aggs-matrix-stats]
+### Large Amount of "loaded module" Output Cut ###
+[2018-08-17T21:44:29,125][INFO ][o.e.p.PluginsService     ] [QlkqhL2] loaded plugin [ingest-geoip]
+[2018-08-17T21:44:29,125][INFO ][o.e.p.PluginsService     ] [QlkqhL2] loaded plugin [ingest-user-agent]
+[2018-08-17T21:44:31,811][INFO ][o.e.x.s.a.s.FileRolesStore] [QlkqhL2] parsed [0] roles from file [/usr/share/elasticsearch/config/roles.yml]
+[2018-08-17T21:44:32,612][INFO ][o.e.x.m.j.p.l.CppLogMessageHandler] [controller/92] [Main.cc@109] controller (64 bit): Version 6.3.2 (Build 903094f295d249) Copyright (c) 2018 Elasticsearch BV
+[2018-08-17T21:44:33,413][INFO ][o.e.d.DiscoveryModule    ] [QlkqhL2] using discovery type [single-node]
+[2018-08-17T21:44:34,278][INFO ][o.e.n.Node               ] [QlkqhL2] initialized
+[2018-08-17T21:44:34,278][INFO ][o.e.n.Node               ] [QlkqhL2] starting ...
+[2018-08-17T21:44:34,447][INFO ][o.e.t.TransportService   ] [QlkqhL2] publish_address {172.17.0.2:9300}, bound_addresses {0.0.0.0:9300}
+[2018-08-17T21:44:34,514][INFO ][o.e.x.s.t.n.SecurityNetty4HttpServerTransport] [QlkqhL2] publish_address {172.17.0.2:9200}, bound_addresses {0.0.0.0:9200}
+[2018-08-17T21:44:34,523][INFO ][o.e.n.Node               ] [QlkqhL2] started
+[2018-08-17T21:44:34,617][WARN ][o.e.x.s.a.s.m.NativeRoleMappingStore] [QlkqhL2] Failed to clear cache for realms [[]]
+[2018-08-17T21:44:34,696][INFO ][o.e.g.GatewayService     ] [QlkqhL2] recovered [0] indices into cluster_state
+[2018-08-17T21:44:34,990][INFO ][o.e.c.m.MetaDataIndexTemplateService] [QlkqhL2] adding template [.watch-history-7] for index patterns [.watcher-history-7*]
+[2018-08-17T21:44:35,010][INFO ][o.e.c.m.MetaDataIndexTemplateService] [QlkqhL2] adding template [.triggered_watches] for index patterns [.triggered_watches*]
+
+We will now send an empty curl request to 0.0.0.0:9200
+
+Press any key...
+{
+  "name" : "QlkqhL2",
+  "cluster_name" : "docker-cluster",
+  "cluster_uuid" : "cglnVUMZS6yNyijVK2Ks-w",
+  "version" : {
+    "number" : "6.3.2",
+    "build_flavor" : "default",
+    "build_type" : "tar",
+    "build_hash" : "053779d",
+    "build_date" : "2018-07-20T05:20:23.451332Z",
+    "build_snapshot" : false,
+    "lucene_version" : "7.3.1",
+    "minimum_wire_compatibility_version" : "5.6.0",
+    "minimum_index_compatibility_version" : "5.0.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+Press any key to create our Dockerfile for the Flask service...
+
+Using some fun method, this is the created file...
+
+----------------------------------------------------------------------------------
+# Specify the base image we want to use.
+# Use unbuntu since we need a custom build step
+FROM ubuntu:14.04
+
+# Install system-wide dependancies for python and node.js
+# Use package manager apt-get to install dependancies.
+# -yqq flag suppresses output and assumes "YES" to all prompts
+RUN apt-get -yqq update
+RUN apt-get -yqq install python-pip python-dev curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+RUN apt-get install -yq nodejs
+
+# Copy our application code. ADD copies the code to a new volume in the container.
+ADD flask-app /opt/flask-app
+
+# Set this as our working directory so following commands will be run in this context.
+WORKDIR /opt/flask-app
+
+# Fetch app specific dependancies
+RUN npm install
+RUN npm run build
+RUN pip install -r requirements.txt
+
+# Specify port number that needs to be exposed
+EXPOSE 5000
+
+# Write the command for running the application. CMD tells the container which command it should
+# run when it is started.
+CMD ["python", "./app.py"]
+----------------------------------------------------------------------------------
+
+
+Time to build the Flask image!
+Press any key...
+Sending build context to Docker daemon  6.732MB
+Step 1/12 : FROM ubuntu:14.04
+14.04: Pulling from library/ubuntu
+8284e13a281d: Pull complete
+26e1916a9297: Pull complete
+4102fc66d4ab: Pull complete
+1cf2b01777b2: Pull complete
+7f7a2d5e04ed: Pull complete
+Digest: sha256:71529e96591eb36a4100cd0cc5353ff1a2f4ee7a85011e3d3dd07cb5eb524a3e
+Status: Downloaded newer image for ubuntu:14.04
+ ---> 971bb384a50a
+Step 2/12 : RUN apt-get -yqq update
+ ---> Running in 2c1f0b9ad2ff
+Removing intermediate container 2c1f0b9ad2ff
+ ---> 3c4fe8796165
+Step 3/12 : RUN apt-get -yqq install python-pip python-dev curl gnupg
+ ---> Running in d697d6b03e99
+### Large Amount of Gargabe Output Cut ###
+Removing intermediate container d697d6b03e99
+ ---> da0e73e332de
+Step 4/12 : RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+ ---> Running in 681bc130a72f
+### Large Amount of Gargabe Output Cut ###
+Removing intermediate container 681bc130a72f
+ ---> da8b282f1882
+Step 5/12 : RUN apt-get install -yq nodejs
+ ---> Running in 841a55947440
+### Large Amount of Gargabe Output Cut ###
+Removing intermediate container 841a55947440
+ ---> 5b3117690bb1
+Step 6/12 : ADD flask-app /opt/flask-app
+ ---> ee1a3d8bd304
+Step 7/12 : WORKDIR /opt/flask-app
+ ---> Running in 26e41fce3dde
+Removing intermediate container 26e41fce3dde
+ ---> a8c673e109db
+Step 8/12 : RUN npm install
+ ---> Running in 6a2369408fae
+### Large Amount of Gargabe Output Cut ###
+added 320 packages in 6.189s
+Removing intermediate container 6a2369408fae
+ ---> 22f3c6370483
+Step 9/12 : RUN npm run build
+ ---> Running in 513046ed37de
+### Large Amount of Gargabe Output Cut ###
+Removing intermediate container 513046ed37de
+ ---> c0fdc5d388b2
+Step 10/12 : RUN pip install -r requirements.txt
+ ---> Running in 81e88b733565
+### Large Amount of Gargabe Output Cut ###
+Successfully installed elasticsearch Flask itsdangerous Jinja2 MarkupSafe requests urllib3 Werkzeug
+Cleaning up...
+Removing intermediate container 81e88b733565
+ ---> 557c6c1ef72c
+Step 11/12 : EXPOSE 5000
+ ---> Running in bab17e6d324a
+Removing intermediate container bab17e6d324a
+ ---> 3498e736042d
+Step 12/12 : CMD ["python", "./app.py"]
+ ---> Running in 220342a7498e
+Removing intermediate container 220342a7498e
+ ---> 6cb48f266a1f
+Successfully built 6cb48f266a1f
+Successfully tagged scottcwilliams511/foodtrucks-web:latest
+
+Starting up Flask service
+Press any key (then wait like 30 seconds)...
+Unable to connect to ES. Retrying in 5 secs...
+Unable to connect to ES. Retrying in 5 secs...
+Unable to connect to ES. Retrying in 5 secs...
+Out of retries. Bailing out...
+NETWORK ID          NAME                DRIVER              SCOPE
+e2b5c07bb7ff        bridge              bridge              local
+46390847a09c        host                host                local
+59df4518ce7e        none                null                local
+Validating that elastic-search is running on the bridge network
+Press any key...
+[
+    {
+        "Name": "bridge",
+        "Id": "e2b5c07bb7ff06c5547f90d1d26c2cc177dc8d326e4a1526af1d7a5b25ce788d",
+        "Created": "2018-08-16T15:37:20.152950803Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "79902ed645cc173dc5c0a42a52b297a75b777af12fc7a6af88d3550571b27701": {
+                "Name": "elastic-search",
+                "EndpointID": "a78023f30dd1240576057af119ecdd3299b78ff49de51452886b2ae25d6567ad",
+                "MacAddress": "02:42:ac:11:00:02",
+                "IPv4Address": "172.17.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "1500"
+        },
+        "Labels": {}
+    }
+]
+The elastic-search container is on on the bridge network!
+
+Let's build our own bridge network named foodtrucks-net!
+Press any key...
+0f4c991d4d654bb377df7c2a8d14228b10d184ffd9f019f8ba5f2e249206713a
+NETWORK ID          NAME                DRIVER              SCOPE
+e2b5c07bb7ff        bridge              bridge              local
+0f4c991d4d65        foodtrucks-net      bridge              local
+46390847a09c        host                host                local
+59df4518ce7e        none                null                local
+
+Stopping elastic-search container on the default bridge and starting on foodtrucks-net bridge network
+Press any key...
+elastic-search
+c81ce1771223da8f0bc3fd1932995217d25bf704ac464794d04cced8819eefcb
+
+Validating that elastic-search is running on the foodtrucks-net bridge network
+Press any key...
+[
+    {
+        "Name": "foodtrucks-net",
+        "Id": "0f4c991d4d654bb377df7c2a8d14228b10d184ffd9f019f8ba5f2e249206713a",
+        "Created": "2018-08-17T22:04:55.5274409Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.21.0.0/16",
+                    "Gateway": "172.21.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "c81ce1771223da8f0bc3fd1932995217d25bf704ac464794d04cced8819eefcb": {
+                "Name": "es",
+                "EndpointID": "a694cc31c3003b2bf9e6df5b57f1aa14c04b90b5758d9056e4c65d6c39b64ac9",
+                "MacAddress": "02:42:ac:15:00:02",
+                "IPv4Address": "172.21.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+The elastic-search container is on on the foodtrucks-net bridge network!
+
+Now lets re-try running the Flask app. Type "exit" to leave
+
+root@085dfa935fac:/opt/flask-app# curl es:9200
+curl: (7) Failed to connect to es port 9200: Connection refused
+root@085dfa935fac:/opt/flask-app# ls
+app.py  node_modules  package-lock.json  package.json  requirements.txt  static  templates  webpack.config.js
+root@085dfa935fac:/opt/flask-app# python app.py
+Index not found...
+Loading data in elasticsearch ...
+Total trucks loaded:  617
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+^Croot@085dfa935fac:/opt/flask-app# exit
+exit
+085dfa935fac
+
+Now let's launch the container for real
+Press any key...
+
+bc093d359fca08811a6ffb8ac7a20bc1ed9d7787111003edd5746834ddac713b
+CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS                  PORTS                                            NAMES
+bc093d359fca        scottcwilliams511/foodtrucks-web                      "python ./app.py"        1 second ago        Up Less than a second   0.0.0.0:5000->5000/tcp                           foodtrucks-web
+c81ce1771223        docker.elastic.co/elasticsearch/elasticsearch:6.3.2   "/usr/local/bin/dock…"   40 seconds ago      Up 39 seconds           0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp   es
+
+The application should be live at http://localhost:5000 (give it a few seconds to load...)
+Press any key once you are finished viewing the live application...
+
+Removing cloned git repo
+Press any key...
+All docker images will be removed. Press enter to proceed or kill the script
+Press enter....
+es
+foodtrucks-web
+bc093d359fca
+c81ce1771223
+foodtrucks-net
+Untagged: scottcwilliams511/foodtrucks-web:latest
+Deleted: sha256:6cb48f266a1f0f4e17a249b4e1c1f4bdbdcf6487c00551fe2ed9eb533c1ac725
+### Large Amount of Similar Output Cut ###

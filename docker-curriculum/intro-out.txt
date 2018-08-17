@@ -1,0 +1,107 @@
+$ sh intro.sh
+
+Verifying Docker has been set up corrently...
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+9db2ca6ccae0: Pull complete
+Digest: sha256:4b8ff392a12ed9ea17784bd3c9a8b1fa3299cac44aca35a85c90c5e3c7afacdc
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/engine/userguide/
+
+Press any key...
+Pulling "busybox" image now!
+
+Using default tag: latest
+latest: Pulling from library/busybox
+8c5a7da1afbc: Pull complete
+Digest: sha256:cb63aa0641a885f54de20f61d152187419e8f6b159ed11a251a09d115fdff9bd
+Status: Downloaded newer image for busybox:latest
+
+Docker images on this system
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+busybox             latest              e1ddd7948a1c        2 weeks ago         1.16MB
+hello-world         latest              2cb0d9787c4d        5 weeks ago         1.85kB
+Press any key...
+Trying 'docker run image-name' command...
+
+... nothing should have happened!
+
+
+Lets pass a command to the container this time...
+
+hello from busybox
+
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                              PORTS               NAMES
+9e06ef012a6b        busybox             "echo 'hello from bu…"   2 seconds ago       Exited (0) Less than a second ago                       boring_ptolemy
+348a9c7670c0        busybox             "sh"                     3 seconds ago       Exited (0) 2 seconds ago                                blissful_jackson
+b33534cdddfb        hello-world         "/hello"                 10 seconds ago      Exited (0) 9 seconds ago                                dreamy_jones
+
+ls of current directory
+
+total 16
+-rw-r--r--  1 engineers  staff  3852 Aug 16 10:36 intro.sh
+-rw-r--r--  1 engineers  staff   746 Aug 16 08:54 intro.sh~
+
+ls inside of container
+
+total 36
+drwxr-xr-x    2 root     root         12288 Jul 31 20:20 bin
+drwxr-xr-x    5 root     root           360 Aug 16 17:37 dev
+drwxr-xr-x    1 root     root          4096 Aug 16 17:37 etc
+drwxr-xr-x    2 nobody   nogroup       4096 Jul 31 20:20 home
+dr-xr-xr-x  186 root     root             0 Aug 16 17:37 proc
+drwx------    2 root     root          4096 Jul 31 20:20 root
+dr-xr-xr-x   13 root     root             0 Aug 16 17:37 sys
+drwxrwxrwt    2 root     root          4096 Jul 31 20:20 tmp
+drwxr-xr-x    3 root     root          4096 Jul 31 20:20 usr
+drwxr-xr-x    4 root     root          4096 Jul 31 20:20 var
+
+Now run your own command inside of the container. Run 'exit' to leave
+
+/ # pwd
+/
+/ # cd var
+/var # ls
+spool  www
+/var # exit
+Press any key...
+Removing all docker containers that have exited
+
+315e9d1e6760
+08c701c08ff6
+9e06ef012a6b
+348a9c7670c0
+b33534cdddfb
+All docker images will be removed. Press enter to proceed or kill the script
+Press enter...
+Untagged: busybox:latest
+Untagged: busybox@sha256:cb63aa0641a885f54de20f61d152187419e8f6b159ed11a251a09d115fdff9bd
+Deleted: sha256:e1ddd7948a1c31709a23cc5b7dfe96e55fc364f90e1cebcde0773a1b5a30dcda
+Deleted: sha256:f9d9e4e6e2f0689cd752390e14ade48b0ec6f2a488a05af5ab2f9ccaf54c299d
+Untagged: hello-world:latest
+Untagged: hello-world@sha256:4b8ff392a12ed9ea17784bd3c9a8b1fa3299cac44aca35a85c90c5e3c7afacdc
+Deleted: sha256:2cb0d9787c4dd17ef9eb03e512923bc4db10add190d3f84af63b744e353a9b34
+Deleted: sha256:ee83fc5847cb872324b8a1f5dbfd754255367f4280122b4e2d5aee17818e31f5
