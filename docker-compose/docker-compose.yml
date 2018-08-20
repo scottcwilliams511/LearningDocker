@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web:
+    build: . # Use the image that's build from the Dockerfine in the current directory
+    ports:
+      # Forwards the exposed port 5000 on the container to port 5000 on the host machine.
+      # Flask server uses the dafault port 5000
+      - "5000:5000"
+    volumes:
+      # Mounts the project directory on the host to he path in the container, allowing you
+      # to modify the code without having to rebuild the image.
+      - .:/code
+
+  redis:
+    # Public Redis image pulled from Ducker Hub
+    image: "redis:alpine"

@@ -118,18 +118,22 @@ echo "--------------------------------------------------------------------------
 echo "Lets try out docker-compose now!\n"
 read -p "Press any key..." -n1 -s
 
-docker-compose up
+# Starts up all the services
+docker-compose up -d
+docker-compose logs -f --tail=100
 
+# Check what networks were created if any
+echo "\nActive networks\n"
+docker network ls
 
+echo "\nOnce finished verifying the site works at http://localhost:5000/\n"
+read -p "Press any key to continue..." -n1 -s
 
-# ... more to come. Next is docker-compose -d ^_^
-# ...
-
-
-
+# Data volumes will persist, so it's possible to start the cluster again with the same data using
+# `docker-compose up`. To destroy the cluster and the data volumes, run this command 
+docker-compose down -v
 
 # Cleanup
-
 read -p "Press any key..." -n1 -s
 docker stop es
 docker stop foodtrucks-web

@@ -1,0 +1,194 @@
+sh dockerCompose.sh
+Running set-up from multiContainer.sh
+We will clone git repo 'FoodTrucks' into the new folder 'temp_3'
+
+mkdir: temp_3: File exists
+fatal: destination path 'temp_3' already exists and is not an empty directory.
+
+Pulling Elasticsearch image...
+
+6.3.2: Pulling from elasticsearch/elasticsearch
+Digest: sha256:8f06aecf7227dbc67ee62d8d05db680f8a29d0296ecd74c60d21f1fe665e04b0
+Status: Image is up to date for docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+
+Using some fun method, this is the created file...
+
+----------------------------------------------------------------------------------
+# Specify the base image we want to use.
+# Use unbuntu since we need a custom build step
+FROM ubuntu:14.04
+
+# Install system-wide dependancies for python and node.js
+# Use package manager apt-get to install dependancies.
+# -yqq flag suppresses output and assumes "YES" to all prompts
+RUN apt-get -yqq update
+RUN apt-get -yqq install python-pip python-dev curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+RUN apt-get install -yq nodejs
+
+# Copy our application code. ADD copies the code to a new volume in the container.
+ADD flask-app /opt/flask-app
+
+# Set this as our working directory so following commands will be run in this context.
+WORKDIR /opt/flask-app
+
+# Fetch app specific dependancies
+RUN npm install
+RUN npm run build
+RUN pip install -r requirements.txt
+
+# Specify port number that needs to be exposed
+EXPOSE 5000
+
+# Write the command for running the application. CMD tells the container which command it should
+# run when it is started.
+CMD ["python", "./app.py"]
+----------------------------------------------------------------------------------
+
+
+Time to build the Flask image!
+Sending build context to Docker daemon  6.733MB
+Step 1/12 : FROM ubuntu:14.04
+ ---> 971bb384a50a
+Step 2/12 : RUN apt-get -yqq update
+ ---> Using cache
+ ---> 83387974b9e4
+Step 3/12 : RUN apt-get -yqq install python-pip python-dev curl gnupg
+ ---> Using cache
+ ---> bc70c583ad90
+Step 4/12 : RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+ ---> Using cache
+ ---> 1e085abf0cf4
+Step 5/12 : RUN apt-get install -yq nodejs
+ ---> Using cache
+ ---> 17862a76386a
+Step 6/12 : ADD flask-app /opt/flask-app
+ ---> Using cache
+ ---> 2aa68a335095
+Step 7/12 : WORKDIR /opt/flask-app
+ ---> Using cache
+ ---> 906005f0affd
+Step 8/12 : RUN npm install
+ ---> Using cache
+ ---> 08a583369b29
+Step 9/12 : RUN npm run build
+ ---> Using cache
+ ---> ae02a81231d4
+Step 10/12 : RUN pip install -r requirements.txt
+ ---> Using cache
+ ---> e74519a931bf
+Step 11/12 : EXPOSE 5000
+ ---> Using cache
+ ---> 408172a52e6f
+Step 12/12 : CMD ["python", "./app.py"]
+ ---> Using cache
+ ---> 4567d4ab2b41
+Successfully built 4567d4ab2b41
+Successfully tagged scottcwilliams511/foodtrucks-web:latest
+REPOSITORY                                      TAG                 IMAGE ID            CREATED              SIZE
+scottcwilliams511/foodtrucks-web                latest              4567d4ab2b41        About a minute ago   547MB
+docker.elastic.co/elasticsearch/elasticsearch   6.3.2               96dd1575de0f        4 weeks ago          826MB
+ubuntu                                          14.04               971bb384a50a        4 weeks ago          188MB
+
+
+Let's create our docker-compose.yml file
+Press any key...
+Using some fun method, this is the created file...
+
+----------------------------------------------------------------------------------
+version: "3"
+
+services:
+    es:
+        # Refer to the elasticsearch image available on Elastic registry
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+        container_name: es
+        # Pass environment variables
+        environment:
+            - discovery.type=single-node
+        ports:
+            - 9200:9200
+        # Specifies a mount point in our container where the code will reside
+        # This is optional, but useful to accrdd logs etc.
+        volumes:
+            - esdata1:/usr/share/elasticsearch/data
+
+    web:
+        # Refer to the recently built image
+        image: scottcwilliams511/foodtrucks-web
+        command: python app.py
+        # Tells docker to start the specified container(s) before this one.
+        depends_on:
+            - es
+        ports:
+            - "5000:5000"
+        # Data we load persists between restarts
+        volumes:
+            - ./flask-app:/opt/flask-app
+
+volumes:
+    esdata1:
+        driver: local
+----------------------------------------------------------------------------------
+Lets try out docker-compose now!
+
+Press any key...Creating network "temp_3_default" with the default driver
+Creating volume "temp_3_esdata1" with local driver
+Creating es ... done
+Creating temp_3_web_1 ... done
+Attaching to temp_3_web_1, es
+es     | OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+es     | [2018-08-20T18:59:42,574][INFO ][o.e.n.Node               ] [] initializing ...
+es     | [2018-08-20T18:59:42,633][INFO ][o.e.e.NodeEnvironment    ] [PO9PwC-] using [1] data paths, mounts [[/usr/share/elasticsearch/data (/dev/sda1)]], net usable_space [52.6gb], net total_space [58.4gb], types [ext4]
+es     | [2018-08-20T18:59:42,634][INFO ][o.e.e.NodeEnvironment    ] [PO9PwC-] heap size [990.7mb], compressed ordinary object pointers [true]
+es     | [2018-08-20T18:59:42,635][INFO ][o.e.n.Node               ] [PO9PwC-] node name derived from node ID [PO9PwC-QR5-qkrZEvqBaNQ]; set [node.name] to override
+es     | [2018-08-20T18:59:42,635][INFO ][o.e.n.Node               ] [PO9PwC-] version[6.3.2], pid[1], build[default/tar/053779d/2018-07-20T05:20:23.451332Z], OS[Linux/4.9.93-linuxkit-aufs/amd64], JVM["Oracle Corporation"/OpenJDK 64-Bit Server VM/10.0.2/10.0.2+13]
+es     | [2018-08-20T18:59:42,636][INFO ][o.e.n.Node               ] [PO9PwC-] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Djava.io.tmpdir=/tmp/elasticsearch.9s5GZx95, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m, -Djava.locale.providers=COMPAT, -XX:UseAVX=2, -Des.cgroups.hierarchy.override=/, -Des.path.home=/usr/share/elasticsearch, -Des.path.conf=/usr/share/elasticsearch/config, -Des.distribution.flavor=default, -Des.distribution.type=tar]
+es     | [2018-08-20T18:59:44,437][INFO ][o.e.p.PluginsService     ] [PO9PwC-] loaded module [aggs-matrix-stats]
+### Large Amount of "loaded module" Output Cut ###
+es     | [2018-08-20T18:59:44,447][INFO ][o.e.p.PluginsService     ] [PO9PwC-] loaded plugin [ingest-geoip]
+es     | [2018-08-20T18:59:44,448][INFO ][o.e.p.PluginsService     ] [PO9PwC-] loaded plugin [ingest-user-agent]
+es     | [2018-08-20T18:59:47,058][INFO ][o.e.x.s.a.s.FileRolesStore] [PO9PwC-] parsed [0] roles from file [/usr/share/elasticsearch/config/roles.yml]
+es     | [2018-08-20T18:59:47,520][INFO ][o.e.x.m.j.p.l.CppLogMessageHandler] [controller/92] [Main.cc@109] controller (64 bit): Version 6.3.2 (Build 903094f295d249) Copyright (c) 2018 Elasticsearch BV
+es     | [2018-08-20T18:59:48,180][INFO ][o.e.d.DiscoveryModule    ] [PO9PwC-] using discovery type [single-node]
+es     | [2018-08-20T18:59:49,007][INFO ][o.e.n.Node               ] [PO9PwC-] initialized
+es     | [2018-08-20T18:59:49,007][INFO ][o.e.n.Node               ] [PO9PwC-] starting ...
+es     | [2018-08-20T18:59:49,176][INFO ][o.e.t.TransportService   ] [PO9PwC-] publish_address {172.25.0.2:9300}, bound_addresses {0.0.0.0:9300}
+es     | [2018-08-20T18:59:49,252][INFO ][o.e.x.s.t.n.SecurityNetty4HttpServerTransport] [PO9PwC-] publish_address {172.25.0.2:9200}, bound_addresses {0.0.0.0:9200}
+es     | [2018-08-20T18:59:49,253][INFO ][o.e.n.Node               ] [PO9PwC-] started
+es     | [2018-08-20T18:59:49,353][WARN ][o.e.x.s.a.s.m.NativeRoleMappingStore] [PO9PwC-] Failed to clear cache for realms [[]]
+es     | [2018-08-20T18:59:49,451][INFO ][o.e.g.GatewayService     ] [PO9PwC-] recovered [0] indices into cluster_state
+es     | [2018-08-20T18:59:49,658][INFO ][o.e.c.m.MetaDataIndexTemplateService] [PO9PwC-] adding template [.watch-history-7] for index patterns [.watcher-history-7*]
+es     | [2018-08-20T18:59:49,684][INFO ][o.e.c.m.MetaDataIndexTemplateService] [PO9PwC-] adding template [.watches] for index patterns [.watches*]
+es     | [2018-08-20T18:59:49,717][INFO ][o.e.c.m.MetaDataIndexTemplateService] [PO9PwC-] adding template [.triggered_watches] for index patterns [.triggered_watches*]
+es     | [2018-08-20T18:59:49,780][INFO ][o.e.c.m.MetaDataIndexTemplateService] [PO9PwC-] adding template [.monitoring-logstash] for index patterns [.monitoring-logstash-6-*]
+es     | [2018-08-20T18:59:49,832][INFO ][o.e.c.m.MetaDataIndexTemplateService] [PO9PwC-] adding template [.monitoring-es] for index patterns [.monitoring-es-6-*]
+es     | [2018-08-20T18:59:49,869][INFO ][o.e.c.m.MetaDataIndexTemplateService] [PO9PwC-] adding template [.monitoring-alerts] for index patterns [.monitoring-alerts-6]
+es     | [2018-08-20T18:59:49,894][INFO ][o.e.c.m.MetaDataIndexTemplateService] [PO9PwC-] adding template [.monitoring-beats] for index patterns [.monitoring-beats-6-*]
+es     | [2018-08-20T18:59:49,936][INFO ][o.e.c.m.MetaDataIndexTemplateService] [PO9PwC-] adding template [.monitoring-kibana] for index patterns [.monitoring-kibana-6-*]
+es     | [2018-08-20T18:59:50,000][INFO ][o.e.l.LicenseService     ] [PO9PwC-] license [4efc30e7-b4e5-481d-a507-eee373efa61f] mode [basic] - valid
+es     | [2018-08-20T18:59:53,191][INFO ][o.e.c.m.MetaDataCreateIndexService] [PO9PwC-] [sfdata] creating index, cause [auto(bulk api)], templates [], shards [5]/[1], mappings []
+es     | [2018-08-20T18:59:53,547][INFO ][o.e.c.m.MetaDataMappingService] [PO9PwC-] [sfdata/8zRysfy7SiSnSfjPY4NKxQ] create_mapping [truck]
+es     | [2018-08-20T18:59:53,644][INFO ][o.e.c.m.MetaDataMappingService] [PO9PwC-] [sfdata/8zRysfy7SiSnSfjPY4NKxQ] update_mapping [truck]
+es     | [2018-08-20T18:59:53,678][INFO ][o.e.c.m.MetaDataMappingService] [PO9PwC-] [sfdata/8zRysfy7SiSnSfjPY4NKxQ] update_mapping [truck]
+es     | [2018-08-20T18:59:53,957][INFO ][o.e.c.m.MetaDataMappingService] [PO9PwC-] [sfdata/8zRysfy7SiSnSfjPY4NKxQ] update_mapping [truck]
+es     | [2018-08-20T18:59:54,044][INFO ][o.e.c.m.MetaDataMappingService] [PO9PwC-] [sfdata/8zRysfy7SiSnSfjPY4NKxQ] update_mapping [truck]
+web_1  |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+^CERROR: Aborting.
+
+Active networks
+
+NETWORK ID          NAME                        DRIVER              SCOPE
+e2b5c07bb7ff        bridge                      bridge              local
+46390847a09c        host                        host                local
+59df4518ce7e        none                        null                local
+e157f78e4c69        temp_3_default              bridge              local
+
+Once finished verifying the site works at http://localhost:5000/
+
+Stopping temp_3_web_1 ... done
+Stopping es           ... done
+Removing temp_3_web_1 ... done
+Removing es           ... done
+Removing network temp_3_default
+Removing volume temp_3_esdata1
